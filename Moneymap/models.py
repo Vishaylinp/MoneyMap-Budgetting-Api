@@ -18,6 +18,6 @@ class Transaction(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     category = db.Column(db.String(30), nullable=False)
-    Date = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User', backref=db.backref("Transaction", lazy=True))    
