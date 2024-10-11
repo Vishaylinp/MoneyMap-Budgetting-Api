@@ -31,6 +31,4 @@ class Category(db.Model):
     category_name = db.Column(db.String(50), unique=True, nullable=False)
 
     def __repr__(self):
-        return f'<Category {self.category_name}>'
-
-     
+        return f'<Category {self.category_name}>'     
