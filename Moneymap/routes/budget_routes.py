@@ -55,21 +55,14 @@ def delete_transaction(id):
 @budget_bp.route('/transactions/<int:user_id>', methods=['GET'])
 @jwt_required()
 def fetch_transactions(user_id):
+
     transactions = Transaction.query.filter_by(user_id=user_id).all()
 
     if transactions:
-        transact_list = [
-            {
-                'id': t.id,
-                'user_id': t.user_id,
-                'amount': t.amount,
-                'category': t.category,
-                'date': t.date.strftime("%Y-%m-%d %H:%M:%S")
-            } for t in transactions
-        ]
+        transact_list = [transaction.to_dict() for transaction in transactions]
         return jsonify(transactions=transact_list), 200
     else:
-        return jsonify(message="No transaction found for this user id"), 404
+        return jsonify(message="No transaction found for this user id"),404
 
 @budget_bp.route('/transactions/<int:id>', methods=['PUT'])
 @jwt_required()
