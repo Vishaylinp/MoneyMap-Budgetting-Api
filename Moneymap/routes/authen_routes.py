@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from Moneymap.models import db, User
+from Moneymap.models import db, User, Category
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required 
+from flask_jwt_extended import create_access_token, jwt_required
 
 authen_bp = Blueprint('authen', __name__)
 bcrypt = Bcrypt()
@@ -17,9 +17,24 @@ def register():
     hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
     new_user = User(username=data['username'], password=hashed_password)
 
+    default_categories = [
+        "income",
+        "food",
+        "entertainment",
+        "bills",
+        "rent",
+        "clothing"
+    ]
+
     try:
         db.session.add(new_user)
+
+        for category_name in default_categories:
+            new_category = Category(category_name=category_name)
+            db.session.add(new_category)
+
         db.session.commit()
+
         return jsonify(message="User is registered successfully"), 201
 
     except Exception as e:
