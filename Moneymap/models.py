@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import event
 from datetime import datetime
 
 
@@ -41,9 +42,12 @@ class Transaction(db.Model):
 
 class Category(db.Model):
     """Represents a categories of a transaction"""
-    __tablename__ = 'category' 
+    __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(50), unique=True, nullable=False)
+
+    def __init__(self, category_name):
+        self.category_name = category_name.lower()
 
     def to_dict(self):
         return {
@@ -52,4 +56,11 @@ class Category(db.Model):
         }
 
     def __repr__(self):
-        return f'<Category {self.category_name}>'     
+        return f'<Category {self.category_name}>'
+
+@event.listens_for(Category, 'before_insert')
+def before_category_insert(mapper, connection, target):
+    """
+    Prevents duplicate category names by converting to lowercase
+    """
+    target.category_name = target.category_name.lower()

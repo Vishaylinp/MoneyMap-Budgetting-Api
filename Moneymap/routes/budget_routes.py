@@ -14,7 +14,7 @@ def insert_transaction():
     if 'category' not in data:
         return jsonify(message="Category is required"), 400
 
-    category = Category.query.filter_by(category_name=data['category']).first()
+    category = Category.query.filter_by(category_name=data['category'].lower()).first()
 
     if not category:
         return jsonify(message="Category not found"), 404
@@ -40,7 +40,7 @@ def insert_transaction():
 def delete_transaction(id):
     transaction = db.session.query(Transaction).filter_by(id=id).first()
     if transaction:
-        try:    
+        try:
             db.session.delete(transaction)
             db.session.commit()
             return jsonify(message="Transaction successfully deleted"), 200
@@ -77,7 +77,7 @@ def update_transaction(id):
         transaction.amount = data['amount']
 
     if 'category' in data:
-        category = Category.query.filter_by(category_name=data['category']).first()
+        category = Category.query.filter_by(category_name=data['category'].lower()).first()
         if not category:
             return jsonify(message="Category not found"), 404
         transaction.category_id = category.id
@@ -89,7 +89,7 @@ def update_transaction(id):
         db.session.rollback()
         return jsonify(message="An error occurred while updating transaction" + str(e)), 500
 
-    
+
 @budget_bp.route('/categories', methods=['POST'])
 @jwt_required()
 def insert_category():
@@ -99,7 +99,8 @@ def insert_category():
     if not category_name:
         return jsonify(message="Category name  is required"), 404
 
-    category_exists = Category.query.filter_by(category_name=category_name).first()
+    category_name_lower = category_name.lower()
+    category_exists = Category.query.filter_by(category_name=category_name_lower).first()
     if category_exists:
         return jsonify(message="category already exists"), 409
 
@@ -179,4 +180,4 @@ def create_wealth_budget():
 
     budget = wealth_budget_split(income)
 
-    return jsonify(budget=budget), 200 
+    return jsonify(budget=budget), 200
