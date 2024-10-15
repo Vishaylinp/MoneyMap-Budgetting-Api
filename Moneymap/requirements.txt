@@ -1,7 +1,9 @@
 Flask==2.1.1
 Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4.46
 Flask-Bcrypt==0.7.1
 Flask-JWT-Extended==4.4.4
 Flask-Migrate==3.1.0
 pytest==7.1.2
 requests==2.27.1
+Werkzeug==2.0.3
