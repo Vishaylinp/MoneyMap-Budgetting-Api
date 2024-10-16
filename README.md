@@ -361,3 +361,46 @@ MoneyMap is a Flask-based API designed to track personal finances by managing tr
 
 ---
 
+
+# Moneymap Project Architecture Overview
+  ## Architecture Overview
+  Moneymap is a personal finance tracker designed to help users manage their income, expenses, and generate financial reports. The project follows a modular architecture that separates concerns and enhances maintainability. Below is an overview of the key components of the architecture.
+
+  ### 1. **Backend**
+  - **Framework:** Developed using Flask, a lightweight web framework for Python that facilitates the creation of RESTful APIs.
+  - **Blueprints:** The application is organized into blueprints to modularize features, such as:
+    - **Authentication Blueprint (`authen_bp`)**: Handles user registration, login, and logout functionalities.
+    - **Report Blueprint (`report_bp`)**: Manages the generation and retrieval of monthly financial reports.
+
+  ### 2. **Database**
+  - **Database Management System:** Uses SQLAlchemy as the ORM (Object Relational Mapper) to interact with a relational database (e.g. SQLlite) to allow for easy database technology swapping.
+  - **Models:** Defines models for core entities, including:
+    - **User**: Represents a user in the system with attributes like username and password.
+    - **Category**: Represents different spending categories (e.g., income, food, entertainment).
+    - **MonthlyReport**: Stores generated reports for users, containing budget split data.
+
+  ### 3. **Authentication and Security**
+  - **JWT (JSON Web Tokens):** Utilizes JWT for secure user authentication. Tokens are issued upon successful login and are required for accessing protected routes.
+  - **Password Hashing:** User passwords are securely hashed using `bcrypt` to ensure sensitive information is protected.
+
+  ### 4. **API Layer**
+  - **RESTful API:** Provides endpoints for frontend interactions, allowing users to perform CRUD operations on their data.
+  - **Documentation:** API routes are documented for easy integration and usage by frontend developers.
+
+  ### 6. **Deployment**
+  - **Environment:** The application is configured to run in a production environment using Gunicorn as the WSGI server and Nginx as a reverse proxy.
+  - **Containerization:** Consider using Docker for containerization to ensure consistency across different environments.
+
+  ### 7. **Testing**
+  - **Unit Testing:** The application includes unit tests to validate the functionality of core features using the `unittest` framework.
+  - **Integration Testing:** Ensures that different components of the application work together as expected.
+
+  ### 8. **Future Enhancements**
+  - **Implementing a frontend** Potential to build a front end using HTML, CSS, JavaScript and technology like Chart.js to visualize data
+  - **Additional Features:** Potential for adding features like budgeting tools, data visualization, and integrations with banking APIs.
+  - **Performance Optimization:** Plans for implementing caching mechanisms and optimizing database queries to improve performance.
+
+  ## Conclusion
+  Moneymap's architecture promotes a clean separation of concerns and scalability, making it easy to extend and maintain as user needs evolve. The modular design also allows for collaborative development, ensuring that multiple developers can work on different components simultaneously without conflicts and allow for easy and seemless expansion on features.
+
+---
