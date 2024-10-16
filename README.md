@@ -43,11 +43,11 @@ MoneyMap is a Flask-based API designed to track personal finances by managing tr
   # Moneymap API Documentation - User Endpoints
   All routes related to user
 
-    ## User Registration
-    ### POST /register
-    Register a new user to Moneymap.
+  ## User Registration
+  ### POST /register
+  Register a new user to Moneymap.
 
-    #### Request Body
+  #### Request Body
       ```json
       {
           "username": "your_username",
@@ -55,12 +55,12 @@ MoneyMap is a Flask-based API designed to track personal finances by managing tr
       }
       ```
 
-    #### Response
+  #### Response
       - **201 Created:** User is registered successfully.
       - **400 Bad Request:** Username already exists.
       - **500 Internal Server Error:** An error occurred during registration.
 
-    #### Curl Command
+  #### Curl Command
       ```bash
       curl -X POST http://<your_api_url>/register \
       -H "Content-Type: application/json" \
@@ -69,11 +69,11 @@ MoneyMap is a Flask-based API designed to track personal finances by managing tr
 
     ---
 
-    ## User Login
-    ### POST /login
-    Login to Moneymap.
+  ## User Login
+  ### POST /login
+  Login to Moneymap.
 
-    #### Request Body
+  #### Request Body
     ```json
     {
         "username": "your_username",
@@ -81,11 +81,11 @@ MoneyMap is a Flask-based API designed to track personal finances by managing tr
     }
     ```
 
-    #### Response
+  #### Response
     - **200 OK:** Login successful, returns a JWT access token.
     - **401 Unauthorized:** Incorrect username or password.
 
-    #### Curl Command
+  #### Curl Command
     ```bash
     curl -X POST http://<your_api_url>/login \
     -H "Content-Type: application/json" \
@@ -94,17 +94,17 @@ MoneyMap is a Flask-based API designed to track personal finances by managing tr
 
     ---
 
-    ## User Logout
-    ### POST /logout
+  ## User Logout
+  ### POST /logout
     Logout of Moneymap.
 
-    #### Authentication
+  #### Authentication
     - Requires a valid JWT access token in the Authorization header.
 
-    #### Response
+  #### Response
     - **200 OK:** Logout successful.
 
-    #### Curl Command
+  #### Curl Command
     ```bash
     curl -X POST http://<your_api_url>/logout \
     -H "Authorization: Bearer <your_jwt_token>"
