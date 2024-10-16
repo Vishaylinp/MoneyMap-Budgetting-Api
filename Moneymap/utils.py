@@ -4,6 +4,16 @@ from collections import defaultdict
 from Moneymap.models import Transaction
 
 def wealth_budget_split(income):
+    """
+    This function takes in an income and returns a dictionary of the 50/30/20 split
+    of the income into the following categories: Tithing, Living Expenses, Savings,
+    Investments, Self-improvement, Luxuries, Charity, Emergency.
+
+    Parameters:
+    income (float): The income to be split
+    Returns:
+    dict: The dictionary of the split
+    """
     percentages = {
         'Tithing': 0.10,
         'Living Expenses': 0.30,
@@ -20,6 +30,25 @@ def wealth_budget_split(income):
     return split
 
 def true_wealth_budget_split(user):
+    """
+    Calculate the wealth budget split for a user over the past 30 days.
+
+    This function retrieves transactions for a given user within the last 30 days,
+    calculates the total spending, income, and categorizes the spending into a breakdown
+    by category. It also calculates the amount saved by the user.
+
+    Parameters:
+    user (User): The user object for whom the budget split is being calculated.
+
+    Returns:
+    dict: A dictionary containing the following keys:
+        - 'username': The username of the user.
+        - 'income': The total income of the user over the period.
+        - 'total_spend': The absolute total spending of the user.
+        - 'breakdown': A dictionary with categories as keys and a list containing
+          the total amount spent and the percentage of total spending for each category.
+        - 'amount_saved': The difference between income and total spending.
+    """
     end_date = datetime.now()
     start_date = end_date - timedelta(days=30)
 
