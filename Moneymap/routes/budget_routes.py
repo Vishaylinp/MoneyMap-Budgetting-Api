@@ -84,6 +84,7 @@ def fetch_transactions(user_id):
     else:
         return jsonify(message="No transaction found for this user id"),404
 
+
 @budget_bp.route('/transactions/<int:id>', methods=['PUT'])
 @jwt_required()
 def update_transaction(id):
@@ -163,6 +164,7 @@ def fetch_categories():
         return jsonify(category_list=category_list), 200
     else:
         return jsonify(message="No category found"), 404
+
 
 @budget_bp.route('/categories/<int:id>', methods=['PUT'])
 @jwt_required()

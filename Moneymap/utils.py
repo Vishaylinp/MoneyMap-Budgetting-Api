@@ -56,6 +56,7 @@ def true_wealth_budget_split(user):
     income = 0
     category_totals = defaultdict(float)
 
+    # last 30 days
     transactions = Transaction.query.filter(
         Transaction.user_id == user.id,
         Transaction.date >= start_date,
@@ -80,10 +81,12 @@ def true_wealth_budget_split(user):
 
     amount_saved = income - total_spending
 
-    return {
-        'username': user.username,
-        'income': income,
-        'total_spend': abs(total_spending),
+    result = {
+        'amount_saved': amount_saved,
         'breakdown': breakdown,
-        'amount_saved': amount_saved
+        'total_spend': abs(total_spending),
+        'income': income,
+        'username': user.username,
     }
+
+    return result
