@@ -10,6 +10,15 @@ report_bp = Blueprint('report', __name__)
 @report_bp.route('/report/monthly', methods=['GET'])
 @jwt_required()
 def monthly_report():
+    """
+    Generate a monthly report for the authenticated user.
+
+    Returns:
+        dict: A dictionary containing the wealth budget split data for the user.
+
+    Raises:
+        None
+    """
     current_user_id = get_jwt_identity()  # Get the current user's identity
     user = User.query.get(current_user_id)  # Fetch user by ID
 

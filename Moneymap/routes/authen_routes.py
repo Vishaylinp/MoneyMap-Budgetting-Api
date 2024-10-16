@@ -8,6 +8,13 @@ bcrypt = Bcrypt()
 
 @authen_bp.route('/register', methods=['POST'])
 def register():
+    """
+    Register a new user to Moneymap.
+
+    :param username: username chosen by user
+    :param password: password chosen by user
+    :return: a json response with a message, and a status code of 201, 400, or 500
+    """
     data = request.json
     existing_user = User.query.filter_by(username=data['username']).first()
 
@@ -43,6 +50,13 @@ def register():
 
 @authen_bp.route('/login', methods=['POST'])
 def login():
+    """
+    Login to Moneymap.
+
+    :param username: username of existing user
+    :param password: password of existing user
+    :return: a json response with a message, a JWT access token, and a status code of 200, 400, or 401
+    """
     data = request.json
     user = User.query.filter_by(username=data['username']).first()
 
@@ -56,4 +70,9 @@ def login():
 @authen_bp.route('/logout', methods=['POST'])
 @jwt_required()
 def logout():
+    """
+    Logout of Moneymap.
+
+    :return: a json response with a message and a status code of 200
+    """
     return jsonify(message="Logout successful"), 200
