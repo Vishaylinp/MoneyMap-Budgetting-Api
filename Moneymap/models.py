@@ -15,6 +15,10 @@ class User(db.Model):
     transactions = db.relationship('Transaction', backref='user', lazy=True)
 
     def to_dict(self):
+        """Returns a dictionary representation of the User.
+
+        The returned dictionary contains the 'id' and 'username' of the User.
+        """
         return {
             'id': self.id,
             'username': self.username
@@ -33,6 +37,13 @@ class Transaction(db.Model):
     category = db.relationship('Category', backref='transactions', lazy=True)
 
     def to_dict(self):
+        """
+        Returns a dictionary representation of the Transaction.
+
+        The returned dictionary contains the transaction's id, amount, date, and category as a dictionary.
+
+        :return: A dictionary representation of the Transaction
+        """
         return {
             'id': self.id,
             'amount': self.amount,
@@ -50,12 +61,26 @@ class Category(db.Model):
         self.category_name = category_name.lower()
 
     def to_dict(self):
+        """
+        Returns a dictionary representation of the Category.
+
+        The returned dictionary contains the category's id and category_name.
+
+        :return: A dictionary representation of the Category
+        """
         return {
             'id': self.id,
             'category_name': self.category_name
         }
 
     def __repr__(self):
+        """
+        Returns a string representation of the Category.
+
+        The returned string contains the category_name enclosed by '<' and '>'
+
+        :return: A string representation of the Category
+        """
         return f'<Category {self.category_name}>'
 
 @event.listens_for(Category, 'before_insert')
