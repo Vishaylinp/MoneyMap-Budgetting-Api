@@ -21,10 +21,17 @@ def insert_transaction():
     if 'category' not in data:
         return jsonify(message="Category is required"), 400
 
-    category = Category.query.filter_by(category_name=data['category'].lower()).first()
+    category_name = data['category'].lower()
+    category = Category.query.filter_by(category_name=category_name).first()
 
     if not category:
-        return jsonify(message="Category not found"), 404
+        category = Category(category_name=category_name)
+        db.session.add(category)
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return jsonify(message="An error occurred while inserting category: " + str(e)), 500
 
     new_transaction = Transaction(
         user_id = user_id,
@@ -83,6 +90,7 @@ def fetch_transactions(user_id):
         return jsonify(transactions=transact_list), 200
     else:
         return jsonify(message="No transaction found for this user id"),404
+
 
 @budget_bp.route('/transactions/<int:id>', methods=['PUT'])
 @jwt_required()
@@ -163,6 +171,7 @@ def fetch_categories():
         return jsonify(category_list=category_list), 200
     else:
         return jsonify(message="No category found"), 404
+
 
 @budget_bp.route('/categories/<int:id>', methods=['PUT'])
 @jwt_required()

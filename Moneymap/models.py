@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import event
+from sqlalchemy import event, func
 from datetime import datetime
 
 
@@ -51,6 +51,7 @@ class Transaction(db.Model):
             'category': self.category.to_dict()
         }
 
+
 class Category(db.Model):
     """Represents a categories of a transaction"""
     __tablename__ = 'category'
@@ -82,6 +83,27 @@ class Category(db.Model):
         :return: A string representation of the Category
         """
         return f'<Category {self.category_name}>'
+
+
+class MonthlyReport(db.Model):
+    """Represents a monthly report"""
+    __tablename__ = 'monthly_report'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    report_data = db.Column(db.JSON, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    def __repr__(self):
+        """
+        Returns a string representation of the MonthlyReport.
+
+        The returned string contains the report_data enclosed by '<' and '>'
+
+        :return: A string representation of the MonthlyReport
+        """
+        return f'<MonthlyReport {self.report_data}>'
+
 
 @event.listens_for(Category, 'before_insert')
 def before_category_insert(mapper, connection, target):
