@@ -42,7 +42,7 @@ def register():
 
         db.session.commit()
 
-        return jsonify(message="User is registered successfully"), 201
+        return jsonify(message="User is registered successfully", user=new_user.to_dict()), 201
 
     except Exception as e:
         db.session.rollback()
