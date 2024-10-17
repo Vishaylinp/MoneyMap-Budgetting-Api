@@ -1,8 +1,9 @@
 ##!/bin/bash
 
 # Replace <your_jwt_token> with the JWT received from the login response
-TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyOTA4NTk1OSwianRpIjoiZTU2ZTNkYjMtMThmYy00ZmM4LTkzMWQtOWFkNDRhYzQ1MDUxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzI5MDg1OTU5LCJleHAiOjE3MjkwODY4NTl9.E5fLhd9FcU7CSx91SpAiM87wL6XPW_d2NvrltpeE1No"
-
+TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyOTE1NzQ4MSwianRpIjoiNzc4N2MxMzMtOWExYi00MzM4LTgyZWQtNmQxYWI5NGE2YjgwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzI5MTU3NDgxLCJleHAiOjE3MjkxNTgzODF9.ZAd2FDw67igrzrTa7IbtN31W8rt_eP84l-yCL08cv8A"
+USER_ID="1"
+TRANSACTION_ID="6"
 # Adding transactions
 curl -X POST http://localhost:5000/transactions \
 -H "Content-Type: application/json" \
@@ -168,11 +169,11 @@ curl -X POST http://localhost:5000/transactions \
 
 # Get all transactions
 # Replace <user_id> with the actual user ID
-curl -X GET http://localhost:5000/transactions/<user_id> \
+curl -X GET http://localhost:5000/transactions/$USER_ID \
 -H "Authorization: Bearer $TOKEN"
 
 #update a Transaction
-curl -X PUT http://localhost:5000/transactions/<transaction_id> \
+curl -X PUT http://localhost:5000/transactions/$TRANSACTION_ID \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $TOKEN" \
 -d '{
@@ -181,5 +182,15 @@ curl -X PUT http://localhost:5000/transactions/<transaction_id> \
 }'
 
 #delete a Transaction
-curl -X DELETE http://localhost:5000/transactions/<transaction_id> \
+curl -X DELETE http://localhost:5000/transactions/$TRANSACTION_ID \
 -H "Authorization: Bearer $TOKEN"
+
+# Get all transactions
+# Replace <user_id> with the actual user ID
+curl -X GET http://localhost:5000/transactions/$USER_ID \
+-H "Authorization: Bearer $TOKEN"
+
+#get report
+curl -X GET http://127.0.0.1:5000/report/monthly \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json"

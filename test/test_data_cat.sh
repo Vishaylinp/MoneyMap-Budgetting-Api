@@ -1,5 +1,6 @@
 # Replace <your_jwt_token> with the JWT received from the login response
-TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyOTA4NTk1OSwianRpIjoiZTU2ZTNkYjMtMThmYy00ZmM4LTkzMWQtOWFkNDRhYzQ1MDUxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzI5MDg1OTU5LCJleHAiOjE3MjkwODY4NTl9.E5fLhd9FcU7CSx91SpAiM87wL6XPW_d2NvrltpeE1No"
+TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyOTE1NzQ4MSwianRpIjoiNzc4N2MxMzMtOWExYi00MzM4LTgyZWQtNmQxYWI5NGE2YjgwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzI5MTU3NDgxLCJleHAiOjE3MjkxNTgzODF9.ZAd2FDw67igrzrTa7IbtN31W8rt_eP84l-yCL08cv8A"
+CATEGORY_ID="10"
 
 # Adding default categories
 curl -X POST http://localhost:5000/categories \
@@ -78,15 +79,15 @@ curl -X GET http://localhost:5000/categories \
 -H "Authorization: Bearer $TOKEN"
 
 # update a category
-curl -X PUT http://localhost:5000/categories/<category_id> \
+curl -X PUT http://localhost:5000/categories/$CATEGORY_ID \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $TOKEN" \
 -d '{
-    "category_name": "new_category_name"  # New category name
+    "category_name": "new_category_name"
 }'
 
 # delete a category
-curl -X DELETE http://localhost:5000/categories/<category_id> \
+curl -X DELETE http://localhost:5000/categories/$CATEGORY_ID \
 -H "Authorization: Bearer $TOKEN"
 
 
@@ -94,5 +95,5 @@ curl -X DELETE http://localhost:5000/categories/<category_id> \
 curl -X POST http://localhost:5000/wealth-budget \
 -H "Content-Type: application/json" \
 -d '{
-    "income": 3000  # Replace with desired income value
+    "income": 3000
 }'
