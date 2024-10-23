@@ -1,8 +1,11 @@
 ##!/bin/bash
 # Replace <your_jwt_token> with the JWT received from the login response
-TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyOTY3NTg5NiwianRpIjoiMWZiM2FmOWUtMGRmZC00MzMzLWE5MjAtOGRhZDA3OTZiOTAwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFhNDhjNDM0LWJkYzItNGY4My04M2IzLWEwODFkYzI4YzQyNCIsIm5iZiI6MTcyOTY3NTg5NiwiZXhwIjoxNzI5Njc2Nzk2fQ.ILm9DkvgOFYx9agz5yBuqWfqHxpPrL6Y6h0iqV9m35s"
-USER_ID="aa48c434-bdc2-4f83-83b3-a081dc28c424"
-TRANSACTION_ID="6"
+echo "please enter TOKEN:"
+read TOKEN
+echo "please enter USER_ID:"
+read USER_ID
+
+echo "adding transactions"
 # Adding transactions
 curl -X POST http://localhost:5000/transactions \
 -H "Content-Type: application/json" \
@@ -165,30 +168,36 @@ curl -X POST http://localhost:5000/transactions \
     "category": "clothing"
 }'
 
-
+echo "getting transactions"
 # Get all transactions
 # Replace <user_id> with the actual user ID
 curl -X GET http://localhost:5000/transactions/$USER_ID \
 -H "Authorization: Bearer $TOKEN"
 
+echo "updating transaction"
+echo "please enter TRANSACTION_ID:"
+read TRANSACTION_ID
 #update a Transaction
-#curl -X PUT http://localhost:5000/transactions/$TRANSACTION_ID \
-#-H "Content-Type: application/json" \
-#-H "Authorization: Bearer $TOKEN" \
-#-d '{
-#    "amount": -120,
-#    "category": "food"
-#}'
+curl -X PUT http://localhost:5000/transactions/$TRANSACTION_ID \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer $TOKEN" \
+-d '{
+    "amount": -120,
+    "category": "food"
+}'
 
+echo "deleting transaction"
 #delete a Transaction
-#curl -X DELETE http://localhost:5000/transactions/$TRANSACTION_ID \
-#-H "Authorization: Bearer $TOKEN"
+curl -X DELETE http://localhost:5000/transactions/$TRANSACTION_ID \
+-H "Authorization: Bearer $TOKEN"
 
+echo "getting transactions"
 # Get all transactions
 # Replace <user_id> with the actual user ID
 curl -X GET http://localhost:5000/transactions/$USER_ID \
 -H "Authorization: Bearer $TOKEN"
 
+echo "getting report"
 #get report
 curl -X GET http://127.0.0.1:5000/report/monthly \
      -H "Authorization: Bearer $TOKEN" \
