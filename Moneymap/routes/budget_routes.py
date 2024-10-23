@@ -49,7 +49,7 @@ def insert_transaction():
         return jsonify(message="An error occurred while inserting transaction: " + str(e)), 500
 
 
-@budget_bp.route('/transactions/<int:id>', methods=['DELETE'])
+@budget_bp.route('/transactions/<id>', methods=['DELETE'])
 @jwt_required()
 def delete_transaction(id):
     """
@@ -72,7 +72,7 @@ def delete_transaction(id):
     return jsonify(message="Transaction not found"), 404
 
 
-@budget_bp.route('/transactions/<int:user_id>', methods=['GET'])
+@budget_bp.route('/transactions/<user_id>', methods=['GET'])
 @jwt_required()
 def fetch_transactions(user_id):
 
@@ -92,7 +92,7 @@ def fetch_transactions(user_id):
         return jsonify(message="No transaction found for this user id"),404
 
 
-@budget_bp.route('/transactions/<int:id>', methods=['PUT'])
+@budget_bp.route('/transactions/<id>', methods=['PUT'])
 @jwt_required()
 def update_transaction(id):
     """
@@ -173,7 +173,7 @@ def fetch_categories():
         return jsonify(message="No category found"), 404
 
 
-@budget_bp.route('/categories/<int:id>', methods=['PUT'])
+@budget_bp.route('/categories/<id>', methods=['PUT'])
 @jwt_required()
 def update_category(id):
     """
@@ -203,7 +203,7 @@ def update_category(id):
         return jsonify(message="An error occurred while updating the category: " + str(e)), 500
 
 
-@budget_bp.route('/categories/<int:id>', methods=['DELETE'])
+@budget_bp.route('/categories/<id>', methods=['DELETE'])
 @jwt_required()
 def delete_category(id):
     """

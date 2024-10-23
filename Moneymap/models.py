@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import event, func
 from datetime import datetime
+import uuid
 
 
 db = SQLAlchemy()
@@ -8,7 +9,7 @@ db = SQLAlchemy()
 class User(db.Model):
     """Represents a User in the database"""
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
 
@@ -28,7 +29,7 @@ class User(db.Model):
 class Transaction(db.Model):
     """Represents a transaction of the User"""
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
@@ -55,7 +56,7 @@ class Transaction(db.Model):
 class Category(db.Model):
     """Represents a categories of a transaction"""
     __tablename__ = 'category'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     category_name = db.Column(db.String(50), unique=True, nullable=False)
 
     def __init__(self, category_name):
@@ -88,7 +89,7 @@ class Category(db.Model):
 class MonthlyReport(db.Model):
     """Represents a monthly report"""
     __tablename__ = 'monthly_report'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     report_data = db.Column(db.JSON, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
